@@ -8,9 +8,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void readsh(char **buffer, int *len);
-void parsesh(char **buffer, int *len, char ***tokens);
-void createandexesh(char ***tokens);
+void readsh(char **buffer, int *len, int *status);
+void parsesh(char **buffer, int *len, char ***tokens, int *status);
+void createandexesh(char ***tokens, int *status);
 void _strtok(void);
 size_t _getline(char **buffer, size_t *sizebuf, int *stream);
 #endif

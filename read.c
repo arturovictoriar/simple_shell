@@ -1,6 +1,6 @@
 #include "headersh.h"
 
-void readsh(char **buffer, int *len)
+void readsh(char **buffer, int *len, int *status)
 {
 	ssize_t read = 0;
 	size_t sizebuf = 20;
@@ -12,14 +12,23 @@ void readsh(char **buffer, int *len)
 	read = getline(buffer, &sizebuf, stdin);
 	if (read == -1)
 	{
-		printf("Error\n");
+		printf("Error puto 1\n");
+		*status = 2;
+		return;
+	}
+	/*New line*/
+	if (buffer[0][0] == '\n')
+	{
+		free(*buffer);
+		*buffer = NULL;
+		*status = 1;
 		return;
 	}
 	/*copybuffer*/
 	copybuffer = malloc(sizeof(char) * read);
 	if (copybuffer == NULL)
 	{
-		printf("Error\n");
+		printf("Error puto 2\n");
 		return;
 	}
 	for (i = 0; buffer[0][i] != '\0'; i++)
