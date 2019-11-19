@@ -7,6 +7,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+extern char **environ;
 
 
 typedef struct path_node
@@ -19,4 +20,5 @@ void parsesh(char **buffer, int *len, char ***tokens, int *status);
 void createandexesh(char ***tokens, int *status);
 void _strtok(void);
 size_t _getline(char **buffer, size_t *sizebuf, int *stream);
+char *_getenv(const char *variable_env);
 #endif
