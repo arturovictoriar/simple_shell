@@ -8,6 +8,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+
+typedef struct path_node
+{
+	char *str;
+	struct path_node *next;
+} path_node;
 void readsh(char **buffer, int *len, int *status);
 void parsesh(char **buffer, int *len, char ***tokens, int *status);
 void createandexesh(char ***tokens, int *status);
