@@ -38,6 +38,7 @@ int main(void)
 	char *buffer, **tokens;
 	int len = 0, status;
 
+	(void) env;
 	do {
 		/*Set all parameter in zero*/
 		set_all(&buffer, &tokens, &status);
