@@ -20,7 +20,7 @@ void readsh(char **buffer, int *len, int *status)
 	read = getline(buffer, &sizebuf, stdin);
 	if (read == -1)
 	{
-		printf("Error puto 1\n");
+		printf("\n");
 		*status = 2;
 		return;
 	}

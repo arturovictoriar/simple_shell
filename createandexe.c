@@ -11,6 +11,7 @@ void createandexesh(char ***tokens, int *status)
 	int wait_status;
 
 	(void) status;
+	add_path(tokens);
 	child_pid = fork();
 	if (child_pid == -1)
 	{
