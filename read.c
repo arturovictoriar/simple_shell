@@ -1,5 +1,13 @@
 #include "headersh.h"
 
+/**
+  * readsh - read what user wrote
+  * @buffer: store the data get it
+  * @len: lenght of the tokens
+  * @status: execute status
+  * Return: nothing
+  */
+
 void readsh(char **buffer, int *len, int *status)
 {
 	ssize_t read = 0;
@@ -7,7 +15,7 @@ void readsh(char **buffer, int *len, int *status)
 	char *copybuffer = NULL, *token;
 	const char delim[] = " ";
 	int i;
-	
+
 	/* READ section*/
 	read = getline(buffer, &sizebuf, stdin);
 	if (read == -1)
@@ -19,8 +27,6 @@ void readsh(char **buffer, int *len, int *status)
 	/*New line*/
 	if (buffer[0][0] == '\n')
 	{
-		free(*buffer);
-		*buffer = NULL;
 		*status = 1;
 		return;
 	}
