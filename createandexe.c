@@ -1,4 +1,9 @@
 #include "headersh.h"
+
+void free_tok(char ***tokens)
+{
+	free((*tokens)[0]);
+}
 /**
   * createandexesh - creat and execute the command given by user
   * @tokens: strings from stdin
@@ -22,18 +27,19 @@ void createandexesh(char ***tokens, int *status, char **en, path_node *li_pa)
 		if (execve((*tokens)[0], (*tokens), en) == -1)
 		{
 			if (statu == 1)
-				free((*tokens)[0]);
+				free_tok(tokens);
 
 			perror("/hsh: 1: : not found");
 			*status = 3;
+			return;
 		}
 		if (statu == 1)
-			free((*tokens)[0]);
+			free_tok(tokens);
 	}
 	else
 	{
 		wait(&wait_status);
 		if (statu == 1)
-			free((*tokens)[0]);
+			free_tok(tokens);
 	}
 }

@@ -37,6 +37,8 @@ void free_list(path_node *list_path)
 		while (list_path != NULL)
 		{
 			savepoin = list_path->next;
+			if (savepoin == NULL)
+				free(list_path->str);
 			free(list_path);
 			list_path = savepoin;
 		}
