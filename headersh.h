@@ -24,4 +24,5 @@ char *_getenv(const char *variable_env, char **en);
 path_node *_getpathdir(char *path);
 int add_path(char ***tokens, path_node *list_path);
 void get_path(path_node **list_path, char **en);
+int _strcmp(char *s1, char *s2);
 #endif

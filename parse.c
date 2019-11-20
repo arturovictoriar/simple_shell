@@ -29,4 +29,6 @@ void parsesh(char **buffer, int *len, char ***tokens, int *status)
 		token = strtok(NULL, delim);
 	}
 	(*tokens)[i] = token;
+	if (_strcmp(*tokens[0], "exit") == 0)
+		exit(0);
 }
