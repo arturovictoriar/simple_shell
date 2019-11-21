@@ -1,13 +1,21 @@
 #include "headersh.h"
 
+/**
+ * free_tok - frees the @tokens string
+ * @tokens: string containing the parsed input line
+ * Return: nothing
+ */
 void free_tok(char ***tokens)
 {
 	free((*tokens)[0]);
 }
+
 /**
   * createandexesh - creat and execute the command given by user
   * @tokens: strings from stdin
   * @status: execute status
+  * @en: list containing the end parameter for execve syscall
+  * @li_pa: list containing the path
   * Return: nothing
   */
 void createandexesh(char ***tokens, int *status, char **en, path_node *li_pa)

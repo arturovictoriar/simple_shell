@@ -1,5 +1,10 @@
 #include "headersh.h"
 
+/**
+ *_strlen - gets the length of a string
+ *@st: string that will be input to the function
+ *Return: the length of @st
+ */
 int _strlen(char *st)
 {
 	int i;
@@ -18,6 +23,7 @@ int _strlen(char *st)
 char *_strcat(char *dest, char *src)
 {
 	int i, j;
+
 	for (i = 0; dest[i] != '\0'; i++)
 		;
 
@@ -28,6 +34,12 @@ char *_strcat(char *dest, char *src)
 	return (dest);
 }
 
+/**
+ *add_path - adds the correct path to the command typed
+ *@tokens: string with parsed input line
+ *@list_path: linked list containing all the directories in PATH variable
+ *Return: 0
+ */
 int add_path(char ***tokens, path_node *list_path)
 {
 	struct stat st;

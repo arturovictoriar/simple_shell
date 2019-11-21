@@ -1,5 +1,12 @@
 #include "headersh.h"
 
+/**
+ * get_path - gets the path of the command typed
+ * @list_path: linked list containing the different directories specified in
+ * the PATH variable
+ * @en: pointer list containing the environment variable parsed by lines
+ * Return: nothing
+ */
 void get_path(path_node **list_path, char **en)
 {
 	char *variable_env =  NULL, *copyvari;

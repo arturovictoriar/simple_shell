@@ -1,5 +1,11 @@
 #include "headersh.h"
 
+/**
+ * _getenv - gets @variable_env's information after the '='
+ * @variable_env: String specifying which variable to get information for
+ * @en: pointer list containing the environment variable parsed by lines
+ * Return: @variable_env's information after the '=' on success, NULL otherwise
+ */
 char *_getenv(const char *variable_env, char **en)
 {
 	int i, j, flag = 1;

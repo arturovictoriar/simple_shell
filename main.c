@@ -7,7 +7,6 @@
   * @status: execute status
   * Return: nothing
   */
-
 void set_all(char **buffer, char ***tokens, int *status)
 {
 	*status = 0;
@@ -21,13 +20,17 @@ void set_all(char **buffer, char ***tokens, int *status)
   * @tokens: store the string user wrote
   * Return: nothing
   */
-
 void free_all(char **buffer, char ***tokens)
 {
 	free(*buffer);
 	free(*tokens);
 }
 
+/**
+ * free_list- frees the linked list containing the path directories
+ * @list_path: the linked list to be freed
+ * Return: nothing
+ */
 void free_list(path_node *list_path)
 {
 	path_node *savepoin;
@@ -47,9 +50,11 @@ void free_list(path_node *list_path)
 
 /**
   * main - free the given parameters to zero
+  * @ac: argument count (unused)
+  * @av: argument vector (unused)
+  * @en: external variable environment parsed by lines
   * Return: nothing
   */
-
 int main(int ac, char **av, char **en)
 {
 	char *buffer, **tokens;
