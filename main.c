@@ -28,16 +28,37 @@ void free_all(char **buffer, char ***tokens)
 	free(*tokens);
 }
 
+void free_list(path_node *list_path)
+{
+	path_node *savepoin;
+
+	if (list_path != NULL)
+	{
+		while (list_path != NULL)
+		{
+			savepoin = list_path->next;
+			if (savepoin == NULL)
+				free(list_path->str);
+			free(list_path);
+			list_path = savepoin;
+		}
+	}
+}
+
 /**
   * main - free the given parameters to zero
   * Return: nothing
   */
 
-int main(void)
+int main(int ac, char **av, char **en)
 {
 	char *buffer, **tokens;
 	int len = 0, status;
+	path_node *list_path;
 
+	(void) ac;
+	(void) av;
+	get_path(&list_path, en);
 	do {
 		/*Set all parameter in zero*/
 		set_all(&buffer, &tokens, &status);
@@ -52,16 +73,22 @@ int main(void)
 		if (status == 1)
 			continue;
 		if (status == 2)
+		{
+			free_list(list_path);
 			return (1);
+		}
 		/*Parse section*/
 		parsesh(&buffer, &len, &tokens, &status);
 		/*Create/Execute Section*/
-		createandexesh(&tokens, &status);
+		createandexesh(&tokens, &status, en, list_path);
 		/*End of program*/
 		free_all(&buffer, &tokens);
 		/*Breaks cases*/
 		if (status == 3)
+		{
+			free_list(list_path);
 			return (1);
+		}
 	} while (isatty(STDIN_FILENO));
 	return (1);
 }

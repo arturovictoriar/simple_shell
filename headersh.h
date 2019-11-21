@@ -6,21 +6,23 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
-extern char **environ;
-
 
 typedef struct path_node
 {
 	char *str;
 	struct path_node *next;
 } path_node;
+
 void readsh(char **buffer, int *len, int *status);
 void parsesh(char **buffer, int *len, char ***tokens, int *status);
-void createandexesh(char ***tokens, int *status);
+void createandexesh(char ***, int *, char **, path_node *);
 void _strtok(void);
 size_t _getline(char **buffer, size_t *sizebuf, int *stream);
-char *_getenv(const char *variable_env);
+char *_getenv(const char *variable_env, char **en);
 path_node *_getpathdir(char *path);
-void add_path(char ***tokens);
+int add_path(char ***tokens, path_node *list_path);
+void get_path(path_node **list_path, char **en);
+int _strcmp(char *s1, char *s2);
 #endif

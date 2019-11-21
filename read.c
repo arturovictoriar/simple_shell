@@ -18,7 +18,7 @@ void readsh(char **buffer, int *len, int *status)
 
 	/* READ section*/
 	read = getline(buffer, &sizebuf, stdin);
-	if (read == -1)
+	if (read == -1 || (*buffer)[read - 1] != '\n')
 	{
 		printf("\n");
 		*status = 2;
