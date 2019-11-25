@@ -2,6 +2,12 @@
 
 ### *hsh* - Holberton SHell, custom shell version created by Holberton students
 
+#### COMPILATION
+
+If the shell is not compiled then compile it as follows:
+
+> gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+
 #### SYNOPSIS
 
 **./hsh**
