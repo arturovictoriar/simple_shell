@@ -1,50 +1,57 @@
 #include "headersh.h"
 
 /**
+  * num_tokens - execute a simple shell
+  * @buffer: argument vector (unused)
+  * @read: external variable environment parsed by lines
+  * Return: number of nodes
+  */
+
+int num_tokens(char **buffer, ssize_t read)
+{
+	const char delim[] = " \n";
+	char *token, *copybuffer = NULL;
+	int i;
+
+	copybuffer = malloc(sizeof(char) * read + 1);
+	if (copybuffer == NULL)
+	{
+		printf("Error puto 2\n");
+		return (0);
+	}
+	for (i = 0; buffer[0][i] != '\0'; i++)
+		copybuffer[i] = buffer[0][i];
+	copybuffer[i] = buffer[0][i];
+	token = strtok(copybuffer, delim);
+	for (i = 0; token != NULL; i++)
+		token = strtok(NULL, delim);
+	free(copybuffer);
+	return (i);
+}
+
+/**
   * readsh - read what user wrote
   * @buffer: store the data get it
   * @len: lenght of the tokens
-  * @status: execute status
   * Return: nothing
   */
 
-void readsh(char **buffer, int *len, int *status)
+int readsh(char **buffer, int *len)
 {
 	ssize_t read = 0;
-	size_t sizebuf = 20;
-	char *copybuffer = NULL, *token;
-	const char delim[] = " ";
-	int i;
+	size_t sizebuf = 0;
 
 	/* READ section*/
 	read = getline(buffer, &sizebuf, stdin);
 	if (read == -1 || (*buffer)[read - 1] != '\n')
 	{
-		printf("\n");
-		*status = 2;
-		return;
+		if (isatty(STDIN_FILENO))
+			write(1, "\n", 1);
+		return (2);
 	}
 	/*New line*/
 	if (buffer[0][0] == '\n')
-	{
-		*status = 1;
-		return;
-	}
-	/*copybuffer*/
-	copybuffer = malloc(sizeof(char) * read);
-	if (copybuffer == NULL)
-	{
-		printf("Error puto 2\n");
-		return;
-	}
-	for (i = 0; buffer[0][i] != '\0'; i++)
-		copybuffer[i] = buffer[0][i];
-	i--;
-	copybuffer[i] = '\0';
-	buffer[0][i] = '\0';
-	token = strtok(copybuffer, delim);
-	for (i = 0; token != NULL; i++)
-		token = strtok(NULL, delim);
-	*len = i;
-	free(copybuffer);
+		return (1);
+	*len = num_tokens(buffer, read);
+	return (0);
 }

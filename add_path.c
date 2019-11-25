@@ -7,7 +7,7 @@
  */
 int _strlen(char *st)
 {
-	int i;
+	int i = 0;
 
 	for (i = 0; st[i] != '\0'; i++)
 		;
@@ -37,20 +37,23 @@ char *_strcat(char *dest, char *src)
 /**
  *add_path - adds the correct path to the command typed
  *@tokens: string with parsed input line
- *@list_path: linked list containing all the directories in PATH variable
+ *@en: environ global variable
  *Return: 0
  */
-int add_path(char ***tokens, path_node *list_path)
+int add_path(char ***tokens, char **en)
 {
 	struct stat st;
 	char *firstOne = NULL, *copyPath = NULL;
 	int lenOne, lenTwo;
+	path_node *list_path, *copylispa;
 
 	if (tokens == NULL)
 		return (0);
 
+	get_path(&list_path, en);
 	if (list_path == NULL)
 		return (0);
+	copylispa = list_path;
 	firstOne = *(tokens)[0];
 	lenOne = _strlen(firstOne);
 	while (list_path != NULL)
@@ -64,11 +67,13 @@ int add_path(char ***tokens, path_node *list_path)
 		if (stat(copyPath, &st) == 0)
 		{
 			(*tokens)[0] = copyPath;
+			free_list(copylispa);
 			return (1);
 		}
 		free(copyPath);
 		copyPath = NULL;
 		list_path = list_path->next;
 	}
+	free_list(copylispa);
 	return (0);
 }

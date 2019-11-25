@@ -13,22 +13,26 @@ void free_tok(char ***tokens)
 /**
   * createandexesh - creat and execute the command given by user
   * @tokens: strings from stdin
-  * @status: execute status
+  * @cc: is the counter of commans executes by user
   * @en: list containing the end parameter for execve syscall
-  * @li_pa: list containing the path
-  * Return: nothing
+  * @av: list containing the arguments given by user
+  * Return: the process status
   */
-void createandexesh(char ***tokens, int *status, char **en, path_node *li_pa)
+int createandexesh(char ***tokens, int *cc, char **en, char **av)
 {
 	pid_t child_pid;
-	int wait_status, statu;
+	int wait_status = 0, statu = 0;
 
-	statu = add_path(tokens, li_pa);
+	statu = built_ins_sh(tokens, en, *tokens);
+	if (statu != 0)
+		return (0);
+
+	statu = add_path(tokens, en);
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		printf("%s: 1: %s: not found", (*tokens)[0], (*tokens)[1]);
-		return;
+		perror("Error:");
+		return (1);
 	}
 	if (child_pid == 0)
 	{
@@ -36,18 +40,15 @@ void createandexesh(char ***tokens, int *status, char **en, path_node *li_pa)
 		{
 			if (statu == 1)
 				free_tok(tokens);
-
-			perror("/hsh: 1: : not found");
-			*status = 3;
-			return;
+			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, (*tokens)[0]);
+			return (127);
 		}
-		if (statu == 1)
-			free_tok(tokens);
 	}
 	else
-	{
 		wait(&wait_status);
-		if (statu == 1)
-			free_tok(tokens);
-	}
+
+	if (statu == 1)
+		free_tok(tokens);
+
+	return (0);
 }

@@ -13,7 +13,7 @@ void parsesh(char **buffer, int *len, char ***tokens, int *status)
 {
 	char *token;
 	int i;
-	const char delim[] = " ";
+	const char delim[] = " \n";
 
 	(void) status;
 	*tokens = malloc(sizeof(char *) * (*len + 1));
@@ -29,6 +29,4 @@ void parsesh(char **buffer, int *len, char ***tokens, int *status)
 		token = strtok(NULL, delim);
 	}
 	(*tokens)[i] = token;
-	if (_strcmp(*tokens[0], "exit") == 0)
-		exit(0);
 }

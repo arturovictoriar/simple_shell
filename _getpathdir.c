@@ -10,13 +10,12 @@
 path_node *_getpathdir(char *path)
 {
 	char *token;
-	path_node *head;
+	path_node *head = NULL;
 	path_node *pathNode;
 
 	if (path == NULL)
 		return (NULL);
 
-	head = NULL;
 	pathNode = malloc(sizeof(path_node));
 	if (pathNode == NULL)
 		return (NULL);
