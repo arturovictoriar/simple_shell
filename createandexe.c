@@ -22,8 +22,9 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av)
 {
 	pid_t child_pid;
 	int wait_status = 0, statu = 0;
+	char **buffer = *tokens;
 
-	statu = built_ins_sh(tokens, en, *tokens);
+	statu = built_ins_sh(tokens, en, buffer);
 	if (statu != 0)
 		return (0);
 
@@ -41,7 +42,8 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av)
 			if (statu == 1)
 				free_tok(tokens);
 			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, (*tokens)[0]);
-			return (127);
+			free_all(buffer, tokens);
+			exit(127);
 		}
 	}
 	else
