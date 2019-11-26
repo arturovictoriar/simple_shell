@@ -2,12 +2,12 @@
 
 /**
  * free_tok - frees the @tokens string
- * @tokens: string containing the parsed input line
+ * @command: string containing the parsed input line
  * Return: nothing
  */
-void free_tok(char ***tokens)
+void free_tok(char *command)
 {
-	free((*tokens)[0]);
+	free(command);
 }
 
 
@@ -32,7 +32,7 @@ int check_command(char ***tokens, int *cc, char **en, char **av)
 	if (statu != 0 && statu != 1)
 		return (2);
 	tok = (*tokens)[0];
-	if (access(tok,  F_OK | X_OK) == 0)
+	if (access(tok, F_OK | X_OK) == 0)
 	{
 		return (statu);
 	}
@@ -63,12 +63,14 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av)
 {
 	pid_t child_pid;
 	int wait_status = 0, statu = 0;
-	char **buffer = *tokens;
+	char *command = **tokens, *trans;
 
 	statu = check_command(tokens, cc, en, av);
 	if (statu != 0 && statu != 1)
 		return (statu);
-
+	trans = (*tokens)[0];
+	(*tokens)[0] = command;
+	command = trans;
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -77,12 +79,11 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av)
 	}
 	if (child_pid == 0)
 	{
-		if (execve((*tokens)[0], (*tokens), en) == -1)
+		if (execve(command, *tokens, en) == -1)
 		{
 			if (statu == 1)
-				free_tok(tokens);
+				free_tok(command);
 			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, (*tokens)[0]);
-			free_all(buffer, tokens);
 			return (127);
 		}
 	}
@@ -93,7 +94,7 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av)
 			WEXITSTATUS(wait_status);
 	}
 	if (statu == 1)
-		free_tok(tokens);
+		free_tok(command);
 
 	return (0);
 }

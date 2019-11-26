@@ -9,7 +9,7 @@
 
 int num_tokens(char **buffer, ssize_t read)
 {
-	const char delim[] = " \n";
+	const char delim[] = " \t\n";
 	char *token, *copybuffer = NULL;
 	int i;
 
