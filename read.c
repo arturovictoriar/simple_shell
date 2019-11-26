@@ -16,7 +16,7 @@ int num_tokens(char **buffer, ssize_t read)
 	copybuffer = malloc(sizeof(char) * read + 1);
 	if (copybuffer == NULL)
 	{
-		printf("Error puto 2\n");
+		perror("Error");
 		return (0);
 	}
 	for (i = 0; buffer[0][i] != '\0'; i++)

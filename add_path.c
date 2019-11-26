@@ -42,9 +42,8 @@ char *_strcat(char *dest, char *src)
  */
 int add_path(char ***tokens, char **en)
 {
-	struct stat st;
-	char *firstOne = NULL, *copyPath = NULL;
-	int lenOne, lenTwo;
+	char *com_user = NULL, *new_path = NULL;
+	int lencom_user, len_dir;
 	path_node *list_path, *copylispa;
 
 	if (tokens == NULL)
@@ -54,24 +53,24 @@ int add_path(char ***tokens, char **en)
 	if (list_path == NULL)
 		return (0);
 	copylispa = list_path;
-	firstOne = *(tokens)[0];
-	lenOne = _strlen(firstOne);
+	com_user = *(tokens)[0];
+	lencom_user = _strlen(com_user);
 	while (list_path != NULL)
 	{
-		lenTwo = _strlen(list_path->str);
-		copyPath = malloc((lenTwo + lenOne + 2) * sizeof(char));
-		copyPath[0] = '\0';
-		_strcat(copyPath, list_path->str);
-		_strcat(copyPath, "/");
-		_strcat(copyPath, firstOne);
-		if (stat(copyPath, &st) == 0)
+		len_dir = _strlen(list_path->str);
+		new_path = malloc((len_dir + lencom_user + 2) * sizeof(char));
+		new_path[0] = '\0';
+		_strcat(new_path, list_path->str);
+		_strcat(new_path, "/");
+		_strcat(new_path, com_user);
+		if (access(new_path, F_OK | X_OK) == 0)
 		{
-			(*tokens)[0] = copyPath;
+			(*tokens)[0] = new_path;
 			free_list(copylispa);
 			return (1);
 		}
-		free(copyPath);
-		copyPath = NULL;
+		free(new_path);
+		new_path = NULL;
 		list_path = list_path->next;
 	}
 	free_list(copylispa);

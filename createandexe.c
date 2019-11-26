@@ -22,9 +22,8 @@ void free_tok(char ***tokens)
 
 int check_command(char ***tokens, int *cc, char **en, char **av)
 {
-	int statu = 0, fi = 0;
+	int statu = 0;
 	char **buffer = *tokens, *tok;
-	struct stat *st = malloc(sizeof(struct stat));
 
 	statu = built_ins_sh(tokens, en, buffer);
 	if (statu != 0)
@@ -32,24 +31,21 @@ int check_command(char ***tokens, int *cc, char **en, char **av)
 	statu = add_path(tokens, en);
 	if (statu != 0 && statu != 1)
 		return (2);
-	fi = stat(**tokens, st);
 	tok = (*tokens)[0];
-	if ((fi == 0) && ((st->st_mode & S_IXUSR) == S_IXUSR))
+	if (access(tok,  F_OK | X_OK) == 0)
 	{
-		free(st);
 		return (statu);
 	}
 	else
 	{
-		if (fi != 0)
+		if (access(tok,  F_OK) != 0)
 		{
 			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, tok);
 		}
-		else if ((st->st_mode & S_IXUSR) != S_IXUSR)
+		else if (access(tok, X_OK) != 0)
 		{
 			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
 		}
-		free(st);
 		return (127);
 	}
 	return (0);
