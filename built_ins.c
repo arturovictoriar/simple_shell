@@ -50,13 +50,16 @@ int exi(char **en, char ***tokens, char **buffer)
 int cd(char **en, char ***tokens, char **buffer)
 {
 	int ret;
-	char *home_env = NULL, *prewd __attribute__((unused)) = NULL;
+	char *home_env = NULL, *prewd = NULL;
 
 	(void) buffer;
 	home_env = _getenv("HOME", en);
 	prewd = _getenv("PWD", en);
-	if ((*tokens)[1] == NULL)
+	if ((*tokens)[1] == NULL || _strcmp((*tokens)[1], "~") == 0 ||
+	    _strcmp((*tokens)[1], "$HOME") == 0)
 		ret = chdir(home_env);
+	if (_strcmp((*tokens)[1], "-") == 0)
+		ret = chdir(prewd);
 	ret = chdir((*tokens)[1]);
 	return (ret);
 }
