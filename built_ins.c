@@ -34,6 +34,7 @@ int env(char **en, char ***tokens, char **buffer)
 
 int exi(char **en, char ***tokens, char **buffer)
 {
+
 	(void) en;
 	free_all(buffer, tokens);
 	exit(0);
