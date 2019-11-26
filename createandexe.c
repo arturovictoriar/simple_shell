@@ -62,7 +62,7 @@ int check_command(char ***tokens, int *cc, char **en, char **av)
 int createandexesh(char ***tokens, int *cc, char **en, char **av)
 {
 	pid_t child_pid;
-	int wait_status = 0, statu = 0;
+	int wait_status = 0, statu = 0, exit_stat = 0;
 	char **buffer = *tokens;
 
 	statu = check_command(tokens, cc, en, av);
@@ -87,8 +87,15 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av)
 		}
 	}
 	else
-		wait(&wait_status);
-
+	{
+		waitpid(child_pid, &wait_status, 0);
+		if (WIFEXITED(wait_status))
+		{
+			exit_stat = WEXITSTATUS(wait_status);
+			if (exit_stat == 127)
+				printf("Error: %d\n", exit_stat);
+		}
+	}
 	if (statu == 1)
 		free_tok(tokens);
 
