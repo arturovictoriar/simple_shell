@@ -4,12 +4,12 @@
   * set_all - set the given parameters to zero
   * @buffer: store the data get it
   * @tokens: store the string user wrote
-  * @status: execute status
+  * @stat: execute status
   * Return: nothing
   */
-void set_all(char **buffer, char ***tokens, int *status)
+void set_all(char **buffer, char ***tokens, int *stat)
 {
-	*status = 0;
+	*stat = 0;
 	*buffer = NULL;
 	*tokens = NULL;
 }
@@ -65,34 +65,31 @@ void ctrlc(int ctr_c __attribute__((unused)))
 int simple_sh(char **av, char **en)
 {
 	char *buffer, **tokens;
-	int len = 0, status = 0, cont_com = 0;
+	int len = 0, status = 0, stat = 0, cont_com = 0;
 
 	signal(SIGINT, ctrlc);
 	do {
 		cont_com++;
 		/*Set all parameter in zero*/
-		set_all(&buffer, &tokens, &status);
+		set_all(&buffer, &tokens, &stat);
 		/*Interactive shell prompt*/
 		if (isatty(STDIN_FILENO))
 			write(1, "($)", 4);
 		/*READ section*/
-		status = readsh(&buffer, &len);
+		stat = readsh(&buffer, &len);
 		/*Breaks cases*/
-		if (status == 1 || status == 2)
+		if (stat == 1 || stat == 2)
 			free(buffer);
-		if (status == 1)
+		if (stat == 1)
 			continue;
-		if (status == 2)
-			return (0);
+		if (stat == 2)
+			return (status);
 		/*Parse section*/
 		parsesh(&buffer, &len, &tokens, &status);
 		/*Create/Execute Section*/
 		status = createandexesh(&tokens, &cont_com, en, av);
 		/*End of program*/
 		free_all(&buffer, &tokens);
-		/*Breaks cases*/
-		if (status == 127)
-			return (status);
 	} while (1);
 	return (0);
 }
