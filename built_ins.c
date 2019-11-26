@@ -41,6 +41,28 @@ int exi(char **en, char ***tokens, char **buffer)
 }
 
 /**
+ * cd - changes the current working directory
+ * @tokens: the value to print
+ * @en: environ variable
+ * @buffer: read it from user
+ * Return: nothing
+ */
+
+int cd(char **en, char ***tokens, char **buffer)
+{
+	int ret;
+	char *home_env = NULL, *prewd __attribute__((unused)) = NULL;
+
+	(void) buffer;
+	home_env = _getenv("HOME", en);
+	prewd = _getenv("PWD", en);
+	if ((*tokens)[1] == NULL)
+		ret = chdir(home_env);
+	ret = chdir((*tokens)[1]);
+	return (ret);
+}
+
+/**
   * built_ins_sh - fills memory with a constant byte
   * @tokens: the value to print
   * @en: environ variable
@@ -54,6 +76,7 @@ int built_ins_sh(char ***tokens, char **en, char **buffer)
 	op_t o[] = {
 	{"env", env},
 	{"exit", exi},
+	{"cd", cd},
 	{NULL, NULL},
 	};
 
