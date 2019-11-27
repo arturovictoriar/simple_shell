@@ -45,14 +45,19 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 	{
 		if ((st.st_mode & S_IFMT) == S_IFDIR)
 		{
-			perror(*av);
+			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
 			return (126);
 		}
 		if (access(tok,  F_OK) != 0)
-			perror(*av);
+		{
+			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, tok);
+			return (127);
+		}
 		else if (access(tok, X_OK) != 0)
-			perror(*av);
-		return (127);
+		{
+			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
+			return (126);
+		}
 	}
 	return (0);
 }
