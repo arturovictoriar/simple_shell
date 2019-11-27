@@ -74,7 +74,7 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 int createandexesh(char ***tokens, int *cc, char **en, char **av, int *statuss)
 {
 	pid_t child_pid;
-	int wait_status = 0, statu = 0;
+	int wait_status = 0, statu = 0, exit_stat = 0;
 	char *command = **tokens, *trans;
 
 	statu = check_command(tokens, cc, en, av, statuss);
@@ -96,17 +96,17 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av, int *statuss)
 			if (statu == 1)
 				free_tok(command);
 			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, (*tokens)[0]);
-			return (127);
+			exit(50);
 		}
 	}
 	else
 	{
 		waitpid(child_pid, &wait_status, 0);
 		if (WIFEXITED(wait_status))
-			WEXITSTATUS(wait_status);
+			exit_stat = WEXITSTATUS(wait_status);
 	}
 	if (statu == 1)
 		free_tok(command);
 
-	return (0);
+	return (exit_stat);
 }
