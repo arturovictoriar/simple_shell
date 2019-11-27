@@ -21,5 +21,5 @@ void get_path(path_node **list_path, char **en)
 		copyvari[i] = variable_env[i];
 	copyvari[i] = '\0';
 
-	*list_path = _getpathdir(copyvari);
+	*list_path = _getpathdir(copyvari, en);
 }

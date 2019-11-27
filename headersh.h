@@ -40,7 +40,7 @@ int readsh(char **buffer, int *len);
 void parsesh(char **buffer, int *len, char ***tokens, int *status);
 int createandexesh(char ***, int *, char **, char **, int *);
 char *_getenv(const char *variable_env, char **en);
-path_node *_getpathdir(char *path);
+path_node *_getpathdir(char *path, char **);
 int add_path(char ***tokens, char **en);
 void get_path(path_node **list_path, char **en);
 int _strcmp(char *s1, char *s2);

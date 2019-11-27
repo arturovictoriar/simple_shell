@@ -27,7 +27,6 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 	char **buffer = *tokens, *tok = NULL;
 	struct stat st;
 
-	(void) cc;
 	st.st_mode = 0;
 	statu = built_ins_sh(tokens, en, buffer, statuss);
 	if (statu != 0)
@@ -56,8 +55,9 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 		else if (access(tok, X_OK) != 0)
 		{
 			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
-			return (127);
+			return (126);
 		}
+
 	}
 	return (0);
 }

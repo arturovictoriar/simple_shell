@@ -5,9 +5,10 @@
  * list
  * @path: the string containing the whole string of the PATH variable without
  * the header
+ * @en: environ variable
  * Return: the head node of the parsed linked list
  */
-path_node *_getpathdir(char *path)
+path_node *_getpathdir(char *path, char **en)
 {
 	char *token;
 	path_node *head = NULL;
@@ -21,7 +22,10 @@ path_node *_getpathdir(char *path)
 		return (NULL);
 
 	token = strtok(path, ":");
-	pathNode->str = token;
+	if (token[0] == '\0')
+		pathNode->str = _getenv("PWD", en);
+	else
+		pathNode->str = token;
 	pathNode->next = head;
 	head = pathNode;
 	while (token != NULL)
