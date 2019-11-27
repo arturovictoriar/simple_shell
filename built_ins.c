@@ -5,15 +5,17 @@
   * @tokens: the value to print
   * @en: environ variable
   * @buffer: read it from user
+  * @statuss: previous loop status
   * Return: nothing
   */
 
-int env(char **en, char ***tokens, char **buffer)
+int env(char **en, char ***tokens, char **buffer, int *statuss)
 {
 	int i, j;
 
 	(void) tokens;
 	(void) buffer;
+	(void) statuss;
 	for (i = 0; en[i] != NULL; i++)
 	{
 		for (j = 0; en[i][j] != '\0'; j++)
@@ -29,15 +31,16 @@ int env(char **en, char ***tokens, char **buffer)
   * @tokens: the value to print
   * @en: environ variable
   * @buffer: read it from user
+  * @statuss: previous loop status
   * Return: nothing
  */
 
-int exi(char **en, char ***tokens, char **buffer)
+int exi(char **en, char ***tokens, char **buffer, int *statuss)
 {
 
 	(void) en;
 	free_all(buffer, tokens);
-	exit(0);
+	exit(*statuss);
 }
 
 /**
@@ -45,15 +48,17 @@ int exi(char **en, char ***tokens, char **buffer)
  * @tokens: the value to print
  * @en: environ variable
  * @buffer: read it from user
+ * @statuss: previous loop status
  * Return: nothing
  */
 
-int cd(char **en, char ***tokens, char **buffer)
+int cd(char **en, char ***tokens, char **buffer, int *statuss)
 {
 	int ret;
 	char *home_env = NULL, *prewd = NULL;
 
 	(void) buffer;
+	(void) statuss;
 	home_env = _getenv("HOME", en);
 	prewd = _getenv("PWD", en);
 	if ((*tokens)[1] == NULL || _strcmp((*tokens)[1], "~") == 0 ||
@@ -70,10 +75,11 @@ int cd(char **en, char ***tokens, char **buffer)
   * @tokens: the value to print
   * @en: environ variable
   * @buffer: read it from user
+  * @statuss: previous loop status
   * Return: numbers of characters printed
   */
 
-int built_ins_sh(char ***tokens, char **en, char **buffer)
+int built_ins_sh(char ***tokens, char **en, char **buffer, int *statuss)
 {
 	int j;
 	op_t o[] = {
@@ -85,6 +91,6 @@ int built_ins_sh(char ***tokens, char **en, char **buffer)
 
 	for (j = 0; o[j].op != NULL; j++)
 		if (_strcmp((*tokens)[0], o[j].op) == 0)
-			return (o[j].f(en, tokens, buffer));
+			return (o[j].f(en, tokens, buffer, statuss));
 	return (0);
 }

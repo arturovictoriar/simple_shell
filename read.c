@@ -31,27 +31,33 @@ int num_tokens(char **buffer, ssize_t read)
 
 /**
   * readsh - read what user wrote
-  * @buffer: store the data get it
+  * @buff: store the data get it
   * @len: lenght of the tokens
   * Return: nothing
   */
 
-int readsh(char **buffer, int *len)
+int readsh(char **buff, int *len)
 {
 	ssize_t read = 0;
 	size_t sizebuf = 0;
+	int i;
 
 	/* READ section*/
-	read = getline(buffer, &sizebuf, stdin);
-	if (read == -1 || (*buffer)[read - 1] != '\n')
+	read = getline(buff, &sizebuf, stdin);
+	if (read == -1 || (*buff)[read - 1] != '\n')
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "\n", 1);
 		return (2);
 	}
+	for (i = 0; buff[0][i] != '\n'; i++)
+	{
+		if ((buff[0][i] == ' ' || buff[0][i] == '\t') && buff[0][i + 1] == '\n')
+			return (1);
+	}
 	/*New line*/
-	if (buffer[0][0] == '\n')
+	if (buff[0][0] == '\n')
 		return (1);
-	*len = num_tokens(buffer, read);
+	*len = num_tokens(buff, read);
 	return (0);
 }

@@ -17,35 +17,41 @@ void free_tok(char *command)
   * @cc: is the counter of commans executes by user
   * @en: list containing the end parameter for execve syscall
   * @av: list containing the arguments given by user
+  * @statuss: previous loop status
   * Return: the process status
   */
 
-int check_command(char ***tokens, int *cc, char **en, char **av)
+int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 {
 	int statu = 0;
-	char **buffer = *tokens, *tok;
+	char **buffer = *tokens, *tok = NULL;
+	struct stat st;
 
-	statu = built_ins_sh(tokens, en, buffer);
+	(void) cc;
+	st.st_mode = 0;
+	statu = built_ins_sh(tokens, en, buffer, statuss);
 	if (statu != 0)
 		return (2);
 	statu = add_path(tokens, en);
 	if (statu != 0 && statu != 1)
 		return (2);
 	tok = (*tokens)[0];
-	if (access(tok, F_OK | X_OK) == 0)
+	stat(tok, &st);
+	if ((access(tok,  F_OK | X_OK) == 0) && ((st.st_mode & S_IFMT) == S_IFREG))
 	{
 		return (statu);
 	}
 	else
 	{
+		if ((st.st_mode & S_IFMT) == S_IFDIR)
+		{
+			perror(*av);
+			return (126);
+		}
 		if (access(tok,  F_OK) != 0)
-		{
-			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, tok);
-		}
+			perror(*av);
 		else if (access(tok, X_OK) != 0)
-		{
-			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
-		}
+			perror(*av);
 		return (127);
 	}
 	return (0);
@@ -57,15 +63,16 @@ int check_command(char ***tokens, int *cc, char **en, char **av)
   * @cc: is the counter of commans executes by user
   * @en: list containing the end parameter for execve syscall
   * @av: list containing the arguments given by user
+  * @statuss: previous loop status
   * Return: the process status
   */
-int createandexesh(char ***tokens, int *cc, char **en, char **av)
+int createandexesh(char ***tokens, int *cc, char **en, char **av, int *statuss)
 {
 	pid_t child_pid;
 	int wait_status = 0, statu = 0;
 	char *command = **tokens, *trans;
 
-	statu = check_command(tokens, cc, en, av);
+	statu = check_command(tokens, cc, en, av, statuss);
 	if (statu != 0 && statu != 1)
 		return (statu);
 	trans = (*tokens)[0];

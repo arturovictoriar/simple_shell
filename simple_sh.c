@@ -87,7 +87,7 @@ int simple_sh(char **av, char **en)
 		/*Parse section*/
 		parsesh(&buffer, &len, &tokens, &status);
 		/*Create/Execute Section*/
-		status = createandexesh(&tokens, &cont_com, en, av);
+		status = createandexesh(&tokens, &cont_com, en, av, &status);
 		/*End of program*/
 		free_all(&buffer, &tokens);
 	} while (1);
