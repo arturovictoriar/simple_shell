@@ -12,6 +12,8 @@ int main(int ac, char **av, char **en)
 {
 	if (ac == 1)
 		return (simple_sh(av, en));
+	else
+		return (2);
 
 	return (0);
 }
