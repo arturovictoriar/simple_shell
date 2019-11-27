@@ -79,7 +79,11 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av, int *statuss)
 
 	statu = check_command(tokens, cc, en, av, statuss);
 	if (statu != 0 && statu != 1)
+	{
+		if (statu == 2)
+			return (0);
 		return (statu);
+	}
 	trans = (*tokens)[0];
 	(*tokens)[0] = command;
 	command = trans;
