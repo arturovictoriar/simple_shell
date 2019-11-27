@@ -41,6 +41,7 @@ int readsh(char **buff, int *len)
 	ssize_t read = 0;
 	size_t sizebuf = 0;
 	int i;
+	char *b = NULL;
 
 	/* READ section*/
 	read = getline(buff, &sizebuf, stdin);
@@ -50,13 +51,14 @@ int readsh(char **buff, int *len)
 			write(1, "\n", 1);
 		return (2);
 	}
-	for (i = 0; buff[0][i] != '\n'; i++)
+	b = buff[0];
+	for (i = 0; b[i] == ' ' || b[i] == '\t'; i++)
 	{
-		if ((buff[0][i] == ' ' || buff[0][i] == '\t') && buff[0][i + 1] == '\n')
+		if (b[i + 1] == '\n')
 			return (1);
 	}
 	/*New line*/
-	if (buff[0][0] == '\n')
+	if (b[0] == '\n')
 		return (1);
 	*len = num_tokens(buff, read);
 	return (0);
