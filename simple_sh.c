@@ -69,6 +69,7 @@ int simple_sh(char **av, char **en)
 
 	signal(SIGINT, ctrlc);
 	do {
+		/*Count all iterations*/
 		cont_com++;
 		/*Set all parameter in zero*/
 		set_all(&buffer, &tokens, &stat);
