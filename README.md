@@ -40,7 +40,7 @@ After this invocation the shell will exit and return to the terminal that called
 
 #### BUILT-INS
 
-The shell has a few built-in functions. These are: exit, env and cd.
+The shell has a few built-in functions. These are: **exit, env** and **cd.**
 
 #### BUGS
 

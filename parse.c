@@ -19,7 +19,7 @@ void parsesh(char **buffer, int *len, char ***tokens, int *status)
 	*tokens = malloc(sizeof(char *) * (*len + 1));
 	if (*tokens == NULL)
 	{
-		printf("Error puto\n");
+		printf("Error\n");
 		return;
 	}
 	token = strtok(*buffer, delim);

@@ -33,6 +33,21 @@ char *_strcat(char *dest, char *src)
 	dest[i + j] = '\0';
 	return (dest);
 }
+/**
+ *add_pwd - adds the correct path to the command typed
+ *@tokens: string with parsed input line
+ *@en: environ global variable
+ *Return: Nothing
+ */
+void add_pwd(char ***tokens, char **en)
+{
+	char *cwd = NULL, *token = NULL;
+
+	cwd = _getenv("PWD", en);
+	token = strtok((*tokens)[0], ".");
+	_strcat(cwd, token);
+	(*tokens)[0] = cwd;
+}
 
 /**
  *add_path - adds the correct path to the command typed
@@ -49,6 +64,11 @@ int add_path(char ***tokens, char **en)
 	if (tokens == NULL)
 		return (0);
 
+	if ((*tokens)[0][0] == '.' && (*tokens)[0][1] == '/')
+	{
+		add_pwd(tokens, en);
+		return (0);
+	}
 	get_path(&list_path, en);
 	if (list_path == NULL)
 		return (0);
