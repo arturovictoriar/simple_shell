@@ -18,7 +18,7 @@ If the shell is not compiled then compile it as follows:
 
 #### OPTIONS
 
-This shell does not take any options as of now.
+This shell does not take any options as of now. However it does handle the CTRL+D and CTRL+C keyboard signals.
 
 #### ARGUMENTS
 
@@ -38,9 +38,13 @@ After this invocation the prompt will be printed and the user will be able to en
 
 After this invocation the shell will exit and return to the terminal that called it.
 
+#### BUILT-INS
+
+The shell has a few built-in functions. These are: exit, env and cd.
+
 #### BUGS
 
-The shell does not handle the following special characters _", ', `, \, *, &, #_
+The shell does not handle the following special characters _", ', `, \, *, &, #, $$, ||._
 
 #### AUTHOR
 
