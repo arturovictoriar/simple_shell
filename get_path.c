@@ -13,7 +13,11 @@ void get_path(path_node **list_path, char **en)
 	int i;
 
 	variable_env = _getenv("PATH", en);
-
+	if (variable_env == NULL)
+	{
+		*list_path = NULL;
+		return;
+	}
 	for (i = 0; variable_env[i] != '\0'; i++)
 		;
 	copyvari = malloc(sizeof(char) * (i + 1));

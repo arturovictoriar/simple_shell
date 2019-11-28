@@ -10,6 +10,8 @@ char *_getenv(const char *variable_env, char **en)
 {
 	int i, j, flag = 1;
 
+	if (en == NULL)
+		return (NULL);
 	for (i = 0; en[i] != NULL; i++, flag = 1)
 	{
 		for (j = 0; en[i][j] != '='; j++)
