@@ -10,6 +10,82 @@ void free_tok(char *command)
 	free(command);
 }
 
+/**
+ * _itoa - takes an int and converts it to a string
+ * @num: int passed to function
+ * @strnum: string to be converted
+ * Return: the converted string
+ */
+char *_itoa(int num, char *strnum)
+{
+	int copy_num = num, i, j, div = 1;
+
+	for (i = 0; copy_num != 0; i++)
+		copy_num /= 10;
+	j = i;
+	while (i != 0)
+	{
+		div *= 10;
+		i--;
+	}
+	div /= 10;
+	for (i = 0; i < j ; i++)
+	{
+		strnum[i] = (num / div) + '0';
+		num %= div;
+		div /= 10;
+	}
+	strnum[i] = '\0';
+	return (strnum);
+}
+
+/**
+ * print_error - prints output error
+ * @av: first parameter that called the shell
+ * @cc: error counter
+ * @tok: command inputed by user
+ * @errmsg: identifier of eroor message to print
+ * Return: nothing
+ */
+void print_error(char *av, int cc, char *tok, int errmsg)
+{
+	char strnum[11];
+	char *message = NULL, *cc_str;
+	int av_len = 0, tok_len = 0, msg_len = 0, cc_len = 0;
+
+	cc_str = _itoa(cc, strnum);
+	cc_len = _strlen(cc_str);
+	av_len = _strlen(av);
+	tok_len = _strlen(tok);
+	if (errmsg == 1)
+	{
+		msg_len = (16 + av_len + tok_len + cc_len);
+		message = malloc(sizeof(char) * (msg_len + 1));
+		message[0] = '\0';
+		_strcat(message, av);
+		_strcat(message, ": ");
+		_strcat(message, cc_str);
+		_strcat(message, ": ");
+		_strcat(message, tok);
+		_strcat(message, ": ");
+		_strcat(message, "not found\n");
+		write(STDERR_FILENO, message, msg_len);
+	}
+	if (errmsg == 0)
+	{
+		msg_len = (24 + av_len + tok_len + cc_len);
+		message = malloc(sizeof(char) * (msg_len + 1));
+		message[0] = '\0';
+		_strcat(message, av);
+		_strcat(message, ": ");
+		_strcat(message, cc_str);
+		_strcat(message, ": ");
+		_strcat(message, tok);
+		_strcat(message, ": ");
+		_strcat(message, "Permission denied\n");
+		write(STDERR_FILENO, message, msg_len);
+	}
+}
 
 /**
   * check_command - creat and execute the command given by user
@@ -44,17 +120,17 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 	{
 		if ((st.st_mode & S_IFMT) == S_IFDIR)
 		{
-			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
+			print_error(av[0], *cc, tok, 0);
 			return (126);
 		}
 		if (access(tok,  F_OK) != 0)
 		{
-			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, tok);
+			print_error(av[0], *cc, tok, 1);
 			return (127);
 		}
 		else if (access(tok, X_OK) != 0)
 		{
-			dprintf(STDERR_FILENO, "%s: %d: %s: Permission denied\n", av[0], *cc, tok);
+			print_error(av[0], *cc, tok, 0);
 			return (126);
 		}
 
@@ -99,7 +175,6 @@ int createandexesh(char ***tokens, int *cc, char **en, char **av, int *statuss)
 		{
 			if (statu == 1)
 				free_tok(command);
-			dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", av[0], *cc, (*tokens)[0]);
 			exit(50);
 		}
 	}

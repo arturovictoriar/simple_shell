@@ -35,6 +35,8 @@ typedef struct op
 	int (*f)(char **, char ***, char **, int *);
 } op_t;
 
+char *_strcat(char *dest, char *src);
+int _strlen(char *st);
 int simple_sh(char **av, char **en);
 int readsh(char **buffer, int *len);
 void parsesh(char **buffer, int *len, char ***tokens, int *status);
