@@ -12,7 +12,7 @@ void get_path(path_node **list_path, char **en)
 	char *variable_env =  NULL, *copyvari;
 	int i;
 
-	variable_env = _getenv("PATH", en);
+	variable_env = _getenv("PATH=", en);
 	if (variable_env == NULL || variable_env[0] == '\0')
 	{
 		*list_path = NULL;
