@@ -85,6 +85,7 @@ void print_error(char *av, int cc, char *tok, int errmsg)
 		_strcat(message, "Permission denied\n");
 		write(STDERR_FILENO, message, msg_len);
 	}
+	free(message);
 }
 
 /**
