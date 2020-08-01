@@ -63,7 +63,9 @@ int cd(char **en, char ***tokens, char **buffer, int *statuss)
 	prewd = _getenv("PWD", en);
 	if ((*tokens)[1] == NULL || _strcmp((*tokens)[1], "~") == 0 ||
 			_strcmp((*tokens)[1], "$HOME") == 0)
-	ret = chdir(home_env);
+	{
+		ret = chdir(home_env);
+	}
 	if (_strcmp((*tokens)[1], "-") == 0)
 		ret = chdir(prewd);
 	ret = chdir((*tokens)[1]);
