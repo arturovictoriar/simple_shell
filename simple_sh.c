@@ -1,12 +1,12 @@
 #include "headersh.h"
 
 /**
-  * set_all - set the given parameters to zero
-  * @buffer: store the data get it
-  * @tokens: store the string user wrote
-  * @stat: execute status
-  * Return: nothing
-  */
+* set_all - set the given parameters to zero
+* @buffer: store the data get it
+* @tokens: store the string user wrote
+* @stat: execute status
+* Return: nothing
+*/
 void set_all(char **buffer, char ***tokens, int *stat)
 {
 	*stat = 0;
@@ -15,11 +15,11 @@ void set_all(char **buffer, char ***tokens, int *stat)
 }
 
 /**
-  * free_all - free the given parameters to zero
-  * @buffer: store the data get it
-  * @tokens: store the string user wrote
-  * Return: nothing
-  */
+* free_all - free the given parameters to zero
+* @buffer: store the data get it
+* @tokens: store the string user wrote
+* Return: nothing
+*/
 void free_all(char **buffer, char ***tokens)
 {
 	free(*buffer);
@@ -27,10 +27,10 @@ void free_all(char **buffer, char ***tokens)
 }
 
 /**
- * free_list- frees the linked list containing the path directories
- * @list_path: the linked list to be freed
- * Return: nothing
- */
+* free_list- frees the linked list containing the path directories
+* @list_path: the linked list to be freed
+* Return: nothing
+*/
 void free_list(path_node *list_path)
 {
 	path_node *savepoin;
@@ -48,20 +48,20 @@ void free_list(path_node *list_path)
 	}
 }
 /**
-  * ctrlc- skkiped the ctrl signal
-  * @ctr_c: ctrl c signal
-  * Return: nothing
-  */
+* ctrlc- skkiped the ctrl signal
+* @ctr_c: ctrl c signal
+* Return: nothing
+*/
 void ctrlc(int ctr_c __attribute__((unused)))
 {
 	write(1, "\n($)", 5);
 }
 /**
-  * simple_sh - execute a simple shell
-  * @av: argument vector (unused)
-  * @en: external variable environment parsed by lines
-  * Return: nothing
-  */
+* simple_sh - execute a simple shell
+* @av: argument vector (unused)
+* @en: external variable environment parsed by lines
+* Return: nothing
+*/
 int simple_sh(char **av, char **en)
 {
 	char *buffer, **tokens;

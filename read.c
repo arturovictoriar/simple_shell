@@ -1,11 +1,11 @@
 #include "headersh.h"
 
 /**
-  * num_tokens - execute a simple shell
-  * @buffer: argument vector (unused)
-  * @read: external variable environment parsed by lines
-  * Return: number of nodes
-  */
+* num_tokens - execute a simple shell
+* @buffer: argument vector (unused)
+* @read: external variable environment parsed by lines
+* Return: number of nodes
+*/
 
 int num_tokens(char **buffer, ssize_t read)
 {
@@ -30,11 +30,11 @@ int num_tokens(char **buffer, ssize_t read)
 }
 
 /**
-  * readsh - read what user wrote
-  * @buff: store the data get it
-  * @len: lenght of the tokens
-  * Return: nothing
-  */
+* readsh - read what user wrote
+* @buff: store the data get it
+* @len: lenght of the tokens
+* Return: nothing
+*/
 
 int readsh(char **buff, int *len)
 {

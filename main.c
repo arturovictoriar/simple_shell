@@ -1,12 +1,12 @@
 #include "headersh.h"
 
 /**
-  * main - call the shell by Arturo and Juani
-  * @ac: argument count
-  * @av: argument vector
-  * @en: external variable environment parsed by lines
-  * Return: nothing
-  */
+* main - call the shell by Arturo and Juani
+* @ac: argument count
+* @av: argument vector
+* @en: external variable environment parsed by lines
+* Return: nothing
+*/
 
 int main(int ac, char **av, char **en)
 {

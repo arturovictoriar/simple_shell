@@ -10,12 +10,12 @@
 #include <sys/wait.h>
 
 /**
-  * struct path_node - singly linked list
-  * @str: string - it a path directory
-  * @next: points to the next node
-  *
-  * Description: Store all the path directories
-  */
+* struct path_node - singly linked list
+* @str: string - it a path directory
+* @next: points to the next node
+*
+* Description: Store all the path directories
+*/
 
 typedef struct path_node
 {
@@ -24,11 +24,11 @@ typedef struct path_node
 } path_node;
 
 /**
-  * struct op - Struct op
-  *
-  * @op: The operator
-  * @f: The function associated
-  */
+* struct op - Struct op
+*
+* @op: The operator
+* @f: The function associated
+*/
 typedef struct op
 {
 	char *op;

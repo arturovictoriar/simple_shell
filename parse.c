@@ -1,13 +1,13 @@
 #include "headersh.h"
 
 /**
-  * parsesh - split what is inside of buffer
-  * @buffer: store the data get it
-  * @tokens: store the string user wrote
-  * @len: length of tokens
-  * @status: execute status
-  * Return: nothing
-  */
+* parsesh - split what is inside of buffer
+* @buffer: store the data get it
+* @tokens: store the string user wrote
+* @len: length of tokens
+* @status: execute status
+* Return: nothing
+*/
 
 void parsesh(char **buffer, int *len, char ***tokens, int *status)
 {

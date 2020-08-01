@@ -1,21 +1,21 @@
 #include "headersh.h"
 
 /**
- * free_tok - frees the @tokens string
- * @command: string containing the parsed input line
- * Return: nothing
- */
+* free_tok - frees the @tokens string
+* @command: string containing the parsed input line
+* Return: nothing
+*/
 void free_tok(char *command)
 {
 	free(command);
 }
 
 /**
- * _itoa - takes an int and converts it to a string
- * @num: int passed to function
- * @strnum: string to be converted
- * Return: the converted string
- */
+* _itoa - takes an int and converts it to a string
+* @num: int passed to function
+* @strnum: string to be converted
+* Return: the converted string
+*/
 char *_itoa(int num, char *strnum)
 {
 	int copy_num = num, i, j, div = 1;
@@ -29,7 +29,7 @@ char *_itoa(int num, char *strnum)
 		i--;
 	}
 	div /= 10;
-	for (i = 0; i < j ; i++)
+	for (i = 0; i < j; i++)
 	{
 		strnum[i] = (num / div) + '0';
 		num %= div;
@@ -40,13 +40,13 @@ char *_itoa(int num, char *strnum)
 }
 
 /**
- * print_error - prints output error
- * @av: first parameter that called the shell
- * @cc: error counter
- * @tok: command inputed by user
- * @errmsg: identifier of eroor message to print
- * Return: nothing
- */
+* print_error - prints output error
+* @av: first parameter that called the shell
+* @cc: error counter
+* @tok: command inputed by user
+* @errmsg: identifier of eroor message to print
+* Return: nothing
+*/
 void print_error(char *av, int cc, char *tok, int errmsg)
 {
 	char strnum[11];
@@ -89,14 +89,14 @@ void print_error(char *av, int cc, char *tok, int errmsg)
 }
 
 /**
-  * check_command - creat and execute the command given by user
-  * @tokens: strings from stdin
-  * @cc: is the counter of commans executes by user
-  * @en: list containing the end parameter for execve syscall
-  * @av: list containing the arguments given by user
-  * @statuss: previous loop status
-  * Return: the process status
-  */
+* check_command - creat and execute the command given by user
+* @tokens: strings from stdin
+* @cc: is the counter of commans executes by user
+* @en: list containing the end parameter for execve syscall
+* @av: list containing the arguments given by user
+* @statuss: previous loop status
+* Return: the process status
+*/
 
 int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 {
@@ -116,7 +116,8 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 	}
 	tok = (*tokens)[0];
 	stat(tok, &st);
-	if ((access(tok,  F_OK | X_OK) == 0) && ((st.st_mode & S_IFMT) == S_IFREG))
+	if ((access(tok, F_OK | X_OK) == 0) &&
+		((st.st_mode & S_IFMT) == S_IFREG))
 	{
 		return (statu);
 	}
@@ -127,7 +128,7 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 			print_error(av[0], *cc, tok, 0);
 			return (126);
 		}
-		if (access(tok,  F_OK) != 0)
+		if (access(tok, F_OK) != 0)
 		{
 			print_error(av[0], *cc, tok, 1);
 			return (127);
@@ -137,20 +138,19 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 			print_error(av[0], *cc, tok, 0);
 			return (126);
 		}
-
 	}
 	return (0);
 }
 
 /**
-  * createandexesh - creat and execute the command given by user
-  * @tokens: strings from stdin
-  * @cc: is the counter of commans executes by user
-  * @en: list containing the end parameter for execve syscall
-  * @av: list containing the arguments given by user
-  * @statuss: previous loop status
-  * Return: the process status
-  */
+* createandexesh - creat and execute the command given by user
+* @tokens: strings from stdin
+* @cc: is the counter of commans executes by user
+* @en: list containing the end parameter for execve syscall
+* @av: list containing the arguments given by user
+* @statuss: previous loop status
+* Return: the process status
+*/
 int createandexesh(char ***tokens, int *cc, char **en, char **av, int *statuss)
 {
 	pid_t child_pid;
