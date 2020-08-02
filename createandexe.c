@@ -109,8 +109,11 @@ int check_command(char ***tokens, int *cc, char **en, char **av, int *statuss)
 	if (statu != 0)
 		return (2);
 	statu = add_path(tokens, en);
-	if (statu != 0 && statu != 1)
-		return (2);
+	if (statu == 127)
+	{
+		print_error(av[0], *cc, (*tokens)[0], 1);
+		return (statu);
+	}
 	tok = (*tokens)[0];
 	stat(tok, &st);
 	if ((access(tok, F_OK | X_OK) == 0) &&

@@ -48,10 +48,14 @@ int add_path(char ***tokens, char **en)
 
 	if (tokens == NULL)
 		return (0);
-
+	if (access((*tokens)[0], F_OK | R_OK | X_OK) == 0 &&
+		(((*tokens)[0])[0] == '/' || ((*tokens)[0])[0] == '.'))
+	{
+		return (0);
+	}
 	get_path(&list_path, en);
 	if (list_path == NULL)
-		return (0);
+		return (127);
 	copylispa = list_path;
 	com_user = *(tokens)[0];
 	lencom_user = _strlen(com_user);
