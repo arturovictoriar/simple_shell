@@ -51,7 +51,7 @@ int add_path(char ***tokens, char **en)
 
 	get_path(&list_path, en);
 	if (list_path == NULL)
-		return (127);
+		return (0);
 	copylispa = list_path;
 	com_user = *(tokens)[0];
 	lencom_user = _strlen(com_user);
